@@ -2,58 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Basic JavaScript Template</title>
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      margin: 0;
-      padding: 2rem;
-      line-height: 1.6;
-      background: #f5f7fb;
-      color: #111;
-    }
-    main {
-      max-width: 720px;
-      margin: 0 auto;
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-      padding: 2rem;
-    }
-    h1 {
-      margin-top: 0;
-    }
-    button {
-      font: inherit;
-      padding: 0.75rem 1.25rem;
-      border: 1px solid #2563eb;
-      background: #3b82f6;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #2563eb;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Basic SEO -->
+  <meta name="description" content="Starter template for a simple web project" />
+  <title>Starter Template</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="template.css" />
+  <link rel="stylesheet" href="js.css" />
+
+  <!-- JS (deferred so DOM is ready) -->
+  <script src="template.js" defer></script>
 </head>
+
 <body>
-  <main>
-    <h1>JavaScript Template</h1>
-    <p>Use this template to start a simple JavaScript demo.</p>
-    <button id="actionButton">Click me</button>
-    <p id="output"></p>
+  <!-- Skip link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <h1>Starter Template</h1>
+    </div>
+  </header>
+
+  <main id="main-content" class="container">
+    <section class="section stack">
+      <h2>Demo</h2>
+      <p>Use this template to start a simple JavaScript demo.</p>
+
+      <button id="actionButton" type="button">Click me</button>
+      <p id="output" aria-live="polite"></p>
+    </section>
   </main>
 
-  <script>
-    const button = document.getElementById('actionButton');
-    const output = document.getElementById('output');
-
-    button.addEventListener('click', () => {
-      const now = new Date();
-      output.textContent = `Button clicked at ${now.toLocaleTimeString()}.`;
-    });
-  </script>
+  <footer class="site-footer">
+    <div class="container">
+      <small>&copy; 2026</small>
+    </div>
+  </footer>
 </body>
 </html>
