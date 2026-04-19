@@ -1,21 +1,22 @@
-require('dotenv').config();
-const { Client } = require('pg');
-
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-});
+const pool = require('./db');
+const { promptMenu, handleAction } = require('./menu');
 
 async function main() {
   try {
-    await client.connect();
     console.log('Connected to PostgreSQL');
 
-    const res = await client.query('SELECT current_database(), current_user');
-    console.log(res.rows[0]);
+    let keepRunning = true;
+
+    while (keepRunning) {
+      const action = await promptMenu();
+      keepRunning = await handleAction(action);
+    }
+
+    console.log('Goodbye!');
   } catch (err) {
-    console.error('Connection error:', err.message);
+    console.error('Application error:', err.message);
   } finally {
-    await client.end();
+    await pool.end();
   }
 }
 
