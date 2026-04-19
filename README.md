@@ -2,7 +2,7 @@
 ![All Bugs Banner](assets/AllBugs.png)
 ## 🕸️ What is All Bugs?
 * 👉 **All Bugs** is exactly as it is named as. It serves as my playground for all the mini projects that I want to try out.
-* 👉 This repo serves as my practice for different languages and where I can freely try out ideas instad of creating multiple repos.
+* 👉 This repo serves as my practice for different languages and where I can freely try out ideas instead of creating multiple repos.
 * 👉 This repo also forces me to have better system design and file management.
 * 👉 Each main folder would have different mini projects that focus on a specific language. E.g. SQL, HTML, CSS, React, TS, etc.
 * 👉 This repo would serve as a support for my other repo: Steal My Notes Here ― the project that teaches others (and as my reference) about the foundations of Full Stack Development.
