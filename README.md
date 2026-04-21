@@ -12,12 +12,16 @@
 * 🤔 This repo will always be a work in progress
 * 🤔 It would allow me to track my progress and improvement in coding
 * 💀 Expect some of the projects to be filled with all bugs that I need to solve. After all, it is an *All Bugs* repo...hahah I digress. Don't leave. 
-* 🤷🏻‍♀️ Feel free to take ideas from here too. Believe me, none of the projects here are actually original. They're taken from Hackathons, textbooks, and my old public projects that I am currently cringing at...
+* 🤷🏻‍♀️ Feel free to take ideas from here too. I have taken inspirations from Hackathons, my old projects, my frustrations with WIX and Wordpress Templates, and textbooks.
+
+## 🎨 Template Repos that were born from this frankenstein All Bugs App (feel free to use...please!)
+* [**html-css-js-template:** A lightweight starter template for **Vanilla JavaScript** frontend projects](https://github.com/ccasalme/html-css-js-template)
+* **Call To Action Site Template** 🏋🏼🐛 In progress!
 
 ## 👁️🫦👁️ Contributions
 * 😍 The project ideas are either taken from my old projects or through web search
-* 📝 Knowledge and tips are from several sources but not limited to: YouTube channels, OpenStax, UofT Continuing Education - Software Development: my personal notes when I was in school, textbooks (e.g. Javascript for dummies, Python Essentials, Cracking the Coding Interview, Beginning MERN Stack Development, Modern Deep Learning Foundations, Mimo, etc.), Leetcodes, Hackathon Ideas
-* 😈 AI is used as an assistant and for helpful tips. However, it is not used to write all the codes. It serves as my second eye for debugging, to assist in tightening ideas and file management, and to improve my prompting
+* 📝 Knowledge and tips are from several sources but not limited to: YouTube channels, OpenStax, UofT Continuing Education - Software Development: my personal notes when I was in school, textbooks (e.g. Javascript for dummies, Python Essentials, Cracking the Coding Interview, Beginning MERN Stack Development, Modern Deep Learning Foundations, Mimo, etc.), Leetcodes, Hackathon Ideas (and shower thoughts, night terrors...just kidding! Maybe ☠️).
+* 😈 AI is used as an assistant and for helpful tips. However, it is not used to write all the codes. It serves as my second eye for debugging, to assist in tightening ideas and file management, and to improve my prompting.
 
 ---
 # ⚖️ License:
