@@ -39,11 +39,15 @@
 			<!-- Article is used for self-contained content that could be distributed independently -->
 			<h2>Article Title</h2>
 			<p>This is an article about something interesting.</p>
-			<!-- Heading 1 (largest) to Heading 6 (smallest). Note that you should never skip heading levels -->
 			
-			<div class="heading-example">
+
+			<div class="heading-example"> 
 				<!-- div is used for grouping content
-				 They are often used to create layout containers, and handling non-semantic content -->
+				 They are often used to create layout containers, 
+				 and handling non-semantic content -->
+
+				<!-- Heading 1 (largest) to Heading 6 (smallest). 
+				 Note that you should never skip heading levels -->
 				<h1>This is a Heading 1</h1>
 				<h2>This is a Heading 2</h2>
 				<h3>This is a Heading 3</h3>
@@ -55,7 +59,6 @@
 			<br> <!-- Line break is used to create a new line without starting a new paragraph -->
 
 			<!-- Paragraphs are used for regular text content -->
-			
 			<p>This is a paragraph of text. It can contain multiple sentences and will wrap automatically.</p>
 			<p>This is another paragraph of text. You can have as many paragraphs as you need.
 				But <em>remember</em> to keep your content organized and easy to read.
@@ -63,7 +66,7 @@
 
 				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
 				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
-				<blockquote>This is a blockquote, 
+				<blockquote>This is a <strong>blockquote</strong>, 
 					which is used for quoting a section of content from another source.</blockquote>
 			
 			<br> <!-- Line break is used to create a new line without starting a new paragraph -->
@@ -94,20 +97,60 @@
 			<h2>Home Section</h2>
 
 			<h3>This is the home section of the website.</h3>
-			
-			<img src="/././assets/AllBugs.png" alt="All Bugs" width="500" height="300" Aria-label="AllBugs App Banner" /> 
+
+			<img src="/././assets/AllBugs.png" href="https://github.com/ccasalme/allbugs" 
+			alt="All Bugs" width="500" height="300" Aria-label="AllBugs App Banner" /> 
 			<!-- Image element with alt text for accessibility
 			 1. You should always include descriptive alt text for images to improve accessibility 
 			 2. You should also provide a caption or description for the image if it adds context or meaning to the content 
 			 3. You can also use the figure and figcaption elements to provide a more semantic way to group images with their captions 
 			 4. You can get the link to the image from the src attribute 
 			 5. Or you can get the link from your assets
-			 6. It is best practice to put the image link in your css file if used as a background image -->
+			 6. It is best practice to put the image link in your css file if used as a background image 
+			 7. href is the attribute used to specify the link for the image -->
 		</section>
 
 		<section id="about">
-			<h2>About Section</h2>
-			<p>This is the about section of the website.</p>
+			<h2>Comment Section</h2>
+			<h3>This is the comment section of the website.</h3>
+			<form>
+				<!-- Form is used for collecting user input -->
+				<label for="name">Name:</label>
+				<input type="text" id="name" name="name" placeholder="Enter your name" required />
+
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+
+				<label for="email">Email:</label>
+				<input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+
+				<label for="number" >Number:</label>
+				<input type="number" id="number" name="number" placeholder="Enter a number" required />
+
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+				
+				<label for="rating">Rate:</label>
+				<input type="number" id="rating" name="rating" min="1" 
+				max="5" placeholder="Rate from 1 to 5" />
+
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+				<!-- Label for the message textarea -->
+				<label for="message">Message:</label>
+				<br	> <!-- Line break is used to create a new line without starting a new paragraph -->
+				<!-- Textarea is used for multi-line text input -->
+				<textarea id="message" name="message" placeholder="Enter your message" required></textarea>
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+
+				<!-- Label for the time input -->
+				<label for="time">Preferred Contact Time:</label>
+				<!-- Time input allows users to select a time -->
+				<input type="time" id="time" name="time" />
+
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+
+				<button type="submit">Submit</button>
 		</section>
 
 		<section id="contact">
