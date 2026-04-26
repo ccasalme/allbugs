@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head is where the important links go into.
+ E.g. CSS stylesheets, JavaScript files, Fonts (if you're using them) -->
+ <!-- Note that even if you can add the <style> tag here, it's better to link to an external CSS file -->
+<head>
+	<!-- Meta tags for character encoding and viewport settings -->
+	<meta charset="UTF-8" />
+
+	<!-- Viewport meta tag for responsive design -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- Title describes the page and is shown in the browser tab 
+	 Keep it under 60 characters -->
+	<title>This is the Title of the Page</title>
+</head>
+
+<!-- Body contains the content that will be displayed on the page -->
+<body>
+	<!--Header is typically used for the top section of the page, like a banner or navigation -->
+	<header>
+		<!-- Header is typically used for the top section of the page, like a banner or navigation -->
+		<h1>Welcome to My Website</h1>
+	
+	<nav>
+		<!-- Navigation is used for links to different sections of the site -->
+		<ul> <!-- Unordered list is used for lists where the order does not matter -->
+			<li><a href="#home">Home</a></li>
+			<li><a href="#about">About</a></li>
+			<li><a href="#contact">Contact</a></li>
+		</ul>
+	</nav>
+	</header>
+
+	<!-- Main is used for the main content of the page -->
+	<main>
+		<article>
+			<!-- Article is used for self-contained content that could be distributed independently -->
+			<h2>Article Title</h2>
+			<p>This is an article about something interesting.</p>
+			<!-- Heading 1 (largest) to Heading 6 (smallest). Note that you should never skip heading levels -->
+			
+			<div class="heading-example">
+				<!-- div is used for grouping content
+				 They are often used to create layout containers, and handling non-semantic content -->
+				<h1>This is a Heading 1</h1>
+				<h2>This is a Heading 2</h2>
+				<h3>This is a Heading 3</h3>
+				<h4>This is a Heading 4</h4>
+				<h5>This is a Heading 5</h5>
+				<h6>This is a Heading 6</h6>
+			</div>
+			
+			<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+
+			<!-- Paragraphs are used for regular text content -->
+			
+			<p>This is a paragraph of text. It can contain multiple sentences and will wrap automatically.</p>
+			<p>This is another paragraph of text. You can have as many paragraphs as you need.
+				But <em>remember</em> to keep your content organized and easy to read.
+				And you can also use <strong>strong</strong> to emphasize important parts of the text.
+
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+				<blockquote>This is a blockquote, 
+					which is used for quoting a section of content from another source.</blockquote>
+			
+			<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+
+			<mark>This is a mark element, which is used to highlight text.</mark>
+
+			<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+			<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+
+			<a href="https://www.example.com" target="_blank" rel="noopener noreferrer">This is a link to an external website</a>
+			
+			<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+			<a href="#home">This is a link to the Home section of the page</a>
+					
+			</p>
+			
+			<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+			
+			<span style="color: blue; font-weight: bold; font-family: Arial, sans-serif; font-variant: small-caps;">
+				This is a span, which is an inline element used for styling a part of the text.
+			</span>
+			
+			<br>
+		</article>
+
+		<!-- Sections are used for grouping related content -->
+		<section id="home">
+			<h2>Home Section</h2>
+
+			<h3>This is the home section of the website.</h3>
+			
+			<img src="/././assets/AllBugs.png" alt="All Bugs" width="500" height="300" Aria-label="AllBugs App Banner" /> 
+			<!-- Image element with alt text for accessibility
+			 1. You should always include descriptive alt text for images to improve accessibility 
+			 2. You should also provide a caption or description for the image if it adds context or meaning to the content 
+			 3. You can also use the figure and figcaption elements to provide a more semantic way to group images with their captions 
+			 4. You can get the link to the image from the src attribute 
+			 5. Or you can get the link from your assets
+			 6. It is best practice to put the image link in your css file if used as a background image -->
+		</section>
+
+		<section id="about">
+			<h2>About Section</h2>
+			<p>This is the about section of the website.</p>
+		</section>
+
+		<section id="contact">
+			<h2>Contact Section</h2>
+			<p>This is the contact section of the website.</p>
+		</section>
+
+		<aside>
+			<!-- Aside is used for content that is related to the main content but not essential -->
+			
+			<h2>Related Links</h2>
+			<ol> <!-- Ordered list is used for lists where the order matters -->
+				<li><a href="https://www.example.com">Example Link 1</a></li>
+				<li><a href="https://www.example.com">Example Link 2</a></li>
+			</ol>
+	</main>
+	
+
+	<footer>
+		<!-- Footer is typically used for the bottom section of the page, like copyright information -->
+		<p>&copy; 2024 My Website</p>
+</body>
+</html>
