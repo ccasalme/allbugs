@@ -5,7 +5,7 @@
 ## What is this Basic HTML Directory?
 * 💼 This directory serves as a reference or tutorial for basic HTML.
 * 🤔 It covers:
-	* 🕸️ Basic **HTML Elements*
+	* 🕸️ Basic **HTML Elements**
 	* 🎨 Basic **Inline Style CSS**
 	* 🤔 HTML Structure and tutorials
 		* 🖼️ **Comments:** serve as tips and guidance for each element 
@@ -20,7 +20,7 @@
 * 🏋🏼 Built with:
 	* 🕸️ Semantic HTML
 	* 🎨 Responsive layout
-	
+
 <br>
 
 [![Watch video here](../../assets/HTMLsample.png)](../../assets/HTMLsample.mov)
