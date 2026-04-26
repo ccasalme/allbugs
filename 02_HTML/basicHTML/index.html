@@ -13,7 +13,160 @@
 
 	<!-- Title describes the page and is shown in the browser tab 
 	 Keep it under 60 characters -->
-	<title>This is the Title of the Page</title>
+	<title>🤪 This is the Title of the Page</title>
+
+	<style>
+		/* CSS styles can be added here, but it's better to link to an external CSS file */
+		body {
+			font-family: Arial, sans-serif;
+			line-height: 1.6;
+			margin: 20px;
+			background: #d2d1e8;
+			background: linear-gradient(90deg, rgba(210, 209, 232, 1) 0%, rgba(250, 250, 255, 1) 35%, rgba(242, 246, 247, 1) 100%);
+			color: #333;
+			padding: 50px;
+			justify-content: center;
+				align-items: center;
+				min-height: 100vh;
+				flex-direction: column;
+				box-sizing: border-box;
+				animation: fadeIn 10s ease-in-out;
+			text-align: center;
+			line-height: 1.8;
+		}
+		
+		header, footer {
+			justify-content: space-around;
+			align-items: center;
+			background-color: #d1d0d2;
+			padding: 20px 10px 10px 10px;
+			text-align: center;
+			border-radius: 8px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			margin-bottom: 10px;
+		}
+		footer {
+			margin-top: 20px;
+			border-radius: 8px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			font-size: 0.9em;
+			color: #555;
+			animation: fadeIn 10s ease-in-out;
+			padding: 20px;
+		}
+		nav ul {
+			list-style: none;
+			padding: 0;
+		}
+		nav ul li {
+			display: inline;
+			margin-right: 10px;
+		}
+		nav ul li a {
+			text-decoration: none;
+			color: #333;
+		}
+		nav ul li a:hover {
+			text-decoration: underline;
+		}
+		.heading-example h1, .heading-example h2, .heading-example h3,
+		.heading-example h4, .heading-example h5, .heading-example h6 {
+			margin: 10px 0;
+		}
+		
+		article {
+			h1, h2, h3, h4, h5, h6 {
+				margin: 10px 0;
+				color: #2c3e50;
+				font-family: 'Georgia', serif;
+				text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+				transition: color 0.3s ease;
+			}
+			margin-bottom: 20px;
+			padding: 20px;
+			background-color: #f4f4f4;
+			border-radius: 8px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+
+		aside {
+			background-color: #f9f9f9;
+			padding: 10px;
+			margin-top: 20px;
+			border-radius: 8px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			font-size: 0.9em;
+			color: #555;
+			display:flex
+			ol {
+				padding-left: 20px;
+			}
+				ol li {
+					margin-bottom: 5px;
+				}
+		}
+		form label {
+			display: block;
+			margin-top: 10px;
+		}
+		form input, form textarea {
+			width: 100%;
+			padding: 8px;
+			margin-top: 5px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+		form button {
+			margin-top: 10px;
+			padding: 10px 20px;
+			background-color: #333;
+			color: #fff;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+		form button:hover {
+			background-color: #555;
+		}
+
+		#home, #comment, #contact {
+			margin-top: 20px;
+			padding: 20px;
+			background: #f2f2f2;
+			background: radial-gradient(circle, rgba(242, 242, 242, 1) 0%, rgba(206, 221, 237, 1) 100%);
+			border-radius: 8px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			align-items: center;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			font-family: 'Georgia', serif;
+				text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+				transition: color 0.3s ease;
+			animation: fadeIn 10s ease-in-out;
+			img {
+				max-width: 100%;
+				height: auto;
+				border-radius: 8px;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			}
+		}
+		aside {
+			float: right; /* Moves aside to the right */
+  			width: 30%;   /* Must set a width for it to sit side-by-side */
+  			margin-left: 15px;
+			margin-top: 20px;
+			padding: 20px;
+			background-color: #f2f2f2;
+			border-radius: 8px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			text-align: justify;
+			font-family: 'Georgia', serif;
+				text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+				transition: color 0.3s ease;
+			animation: fadeIn 10s ease-in-out;	
+		}
+	</style>
 </head>
 
 <!-- Body contains the content that will be displayed on the page -->
@@ -35,15 +188,20 @@
 
 	<!-- Main is used for the main content of the page -->
 	<main>
+		
 		<article>
 			<!-- Article is used for self-contained content that could be distributed independently -->
 			<h2>Article Title</h2>
 			<p>This is an article about something interesting.</p>
-			<!-- Heading 1 (largest) to Heading 6 (smallest). Note that you should never skip heading levels -->
 			
-			<div class="heading-example">
+
+			<div class="heading-example"> 
 				<!-- div is used for grouping content
-				 They are often used to create layout containers, and handling non-semantic content -->
+				 They are often used to create layout containers, 
+				 and handling non-semantic content -->
+
+				<!-- Heading 1 (largest) to Heading 6 (smallest). 
+				 Note that you should never skip heading levels -->
 				<h1>This is a Heading 1</h1>
 				<h2>This is a Heading 2</h2>
 				<h3>This is a Heading 3</h3>
@@ -55,7 +213,6 @@
 			<br> <!-- Line break is used to create a new line without starting a new paragraph -->
 
 			<!-- Paragraphs are used for regular text content -->
-			
 			<p>This is a paragraph of text. It can contain multiple sentences and will wrap automatically.</p>
 			<p>This is another paragraph of text. You can have as many paragraphs as you need.
 				But <em>remember</em> to keep your content organized and easy to read.
@@ -63,7 +220,7 @@
 
 				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
 				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
-				<blockquote>This is a blockquote, 
+				<blockquote>This is a <strong>blockquote</strong>, 
 					which is used for quoting a section of content from another source.</blockquote>
 			
 			<br> <!-- Line break is used to create a new line without starting a new paragraph -->
@@ -89,25 +246,86 @@
 			<br>
 		</article>
 
+
+		<aside>
+			<!-- Aside is used for content that is related to the main content but not essential 
+			 Note: 
+			 - Where you place the aside element matters
+			 - For example, if you place it inside an article, it will be related to that article.
+			 - If you place it outside of the article, it will be related to the whole page.
+			 - You can also use it for sidebars, pull quotes, or any content that is tangentially related to the main content
+			 - It is important to use the aside element correctly to improve the accessibility and SEO of your website
+			 - You can also use the aside element to provide additional information, such as related links, author bio, or advertisements
+			 - It is best practice to keep the aside content concise and relevant to the main content to avoid overwhelming the user
+			 -->
+			
+			<h2>Related Links</h2>
+			<ol> <!-- Ordered list is used for lists where the order matters -->
+				<li><a href="https://www.example.com">Example Link 1</a></li>
+				<li><a href="https://www.example.com">Example Link 2</a></li>
+			</ol>
+		</aside>
+
+
 		<!-- Sections are used for grouping related content -->
 		<section id="home">
 			<h2>Home Section</h2>
 
 			<h3>This is the home section of the website.</h3>
-			
-			<img src="/././assets/AllBugs.png" alt="All Bugs" width="500" height="300" Aria-label="AllBugs App Banner" /> 
+
+			<img src="/././assets/AllBugs.png" href="https://github.com/ccasalme/allbugs" 
+			alt="All Bugs" width="500" height="300" Aria-label="AllBugs App Banner" /> 
 			<!-- Image element with alt text for accessibility
 			 1. You should always include descriptive alt text for images to improve accessibility 
 			 2. You should also provide a caption or description for the image if it adds context or meaning to the content 
 			 3. You can also use the figure and figcaption elements to provide a more semantic way to group images with their captions 
 			 4. You can get the link to the image from the src attribute 
 			 5. Or you can get the link from your assets
-			 6. It is best practice to put the image link in your css file if used as a background image -->
+			 6. It is best practice to put the image link in your css file if used as a background image 
+			 7. href is the attribute used to specify the link for the image -->
 		</section>
 
-		<section id="about">
-			<h2>About Section</h2>
-			<p>This is the about section of the website.</p>
+		<section id="comment">
+			<h2>Comment Section</h2>
+			<h3>This is the comment section of the website.</h3>
+			<form>
+				<!-- Form is used for collecting user input -->
+				<label for="name">Name:</label>
+				<input type="text" id="name" name="name" placeholder="Enter your name" required />
+
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+
+				<label for="email">Email:</label>
+				<input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+
+				<label for="number" >Number:</label>
+				<input type="number" id="number" name="number" placeholder="Enter a number" required />
+
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+				
+				<label for="rating">Rate:</label>
+				<input type="number" id="rating" name="rating" min="1" 
+				max="5" placeholder="Rate from 1 to 5"/>
+
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+				<!-- Label for the message textarea -->
+				<label for="message">Message:</label>
+				<br	> <!-- Line break is used to create a new line without starting a new paragraph -->
+				<!-- Textarea is used for multi-line text input -->
+				<textarea id="message" name="message" placeholder="Enter your message" required></textarea>
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+
+				<!-- Label for the time input -->
+				<label for="time">Preferred Contact Time:</label>
+				<!-- Time input allows users to select a time -->
+				<input type="time" id="time" name="time" />
+
+				<br> <!-- Line break is used to create a new line without starting a new paragraph -->
+
+				<button type="submit">Submit</button>
 		</section>
 
 		<section id="contact">
@@ -115,14 +333,6 @@
 			<p>This is the contact section of the website.</p>
 		</section>
 
-		<aside>
-			<!-- Aside is used for content that is related to the main content but not essential -->
-			
-			<h2>Related Links</h2>
-			<ol> <!-- Ordered list is used for lists where the order matters -->
-				<li><a href="https://www.example.com">Example Link 1</a></li>
-				<li><a href="https://www.example.com">Example Link 2</a></li>
-			</ol>
 	</main>
 	
 
