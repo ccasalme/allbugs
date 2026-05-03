@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Basic SEO -->
+  <meta name="description" content="Starter template for a simple web project" />
+  <title>Functions and Prompts in JS</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="template.css" />
+  <link rel="stylesheet" href="js.css" />
+
+  <!-- JS (deferred so DOM is ready) -->
+  <script src="prompt.js" defer></script>
+</head>
+
+<body>
+  <!-- Skip link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <h1>Functions and Prompts in JavaScript</h1>
+    </div>
+  </header>
+
+  <main id="main-content" class="container">
+    <section class="section stack">
+      <h2>Prompts in Javascript</h2>
+      <p>Learn how to use the prompt() function to get user input.</p>
+
+	  <!--The button and output elements for the demo -->
+      <button id="actionButton" type="button">Click me</button>
+      <p id="output" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <!-- The custom modal for the prompt demo -->
+  <div
+    id="promptModal"
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="promptTitle"
+    aria-describedby="promptMessage"
+    hidden
+  >
+    <div class="modal-window">
+      <button id="closeModalButton" class="icon-button" type="button" aria-label="Close prompt">
+        &times;
+      </button>
+
+      <h2 id="promptTitle">Custom Prompt</h2>
+      <p id="promptMessage">Please enter your message:</p>
+
+      <form id="promptForm" class="prompt-form">
+        <label for="promptInput">Your message</label>
+        <input id="promptInput" name="message" type="text" autocomplete="off" />
+
+        <div class="modal-actions">
+          <button id="cancelModalButton" class="secondary-button" type="button">Cancel</button>
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>&copy; 2026</small>
+    </div>
+  </footer>
+</body>
+</html>
