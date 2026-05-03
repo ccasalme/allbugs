@@ -1,0 +1,31 @@
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      line-height: 1.6;
+      background: #f5f7fb;
+      color: #111;
+    }
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      padding: 2rem;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    button {
+      font: inherit;
+      padding: 0.75rem 1.25rem;
+      border: 1px solid #2563eb;
+      background: #3b82f6;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #2563eb;
+    }

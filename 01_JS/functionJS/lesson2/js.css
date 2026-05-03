@@ -1,0 +1,109 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(17, 24, 39, 0.68);
+  backdrop-filter: blur(4px);
+  z-index: 10;
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+.modal-window {
+  position: relative;
+  width: min(100%, 420px);
+  padding: 1.5rem;
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+}
+
+.modal-window h2 {
+  margin: 0 2.5rem 0.5rem 0;
+}
+
+.modal-window p {
+  margin: 0 0 1rem;
+  color: #4b5563;
+}
+
+.prompt-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.prompt-form label {
+  font-weight: 700;
+}
+
+.prompt-form input {
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  padding: 0.75rem;
+  border: 1px solid #9ca3af;
+  border-radius: 8px;
+}
+
+.prompt-form input:focus {
+  outline: 3px solid rgba(37, 99, 235, 0.22);
+  border-color: #2563eb;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.secondary-button {
+  border-color: #9ca3af;
+  background: #ffffff;
+  color: #111827;
+}
+
+.secondary-button:hover {
+  background: #f3f4f6;
+}
+
+.icon-button {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: inline-grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border-color: transparent;
+  background: transparent;
+  color: #4b5563;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.icon-button:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.modal-open {
+  overflow: hidden;
+}
+
+@media (max-width: 480px) {
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .modal-actions button {
+    width: 100%;
+  }
+}
