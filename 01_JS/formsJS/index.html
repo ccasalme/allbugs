@@ -3,50 +3,202 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="A refined bakery concept site where guests can browse signature pastries and place a pickup order."
+  />
+  <title>Chocolatier Bakery</title>
 
-  <!-- Basic SEO -->
-  <meta name="description" content="Starter template for a simple web project" />
-  <title>🍰 Chocolatier Bakery</title>
+  <link rel="stylesheet" href="./css/global.css" />
+  <link rel="stylesheet" href="./css/design.css" />
 
-  <!-- Styles -->
-   <link rel="stylesheet" href="./css/global.css" />
-   <link rel="stylesheet" href="./css/design.css" />
-   <video autoplay muted playsinline id="bg-video">
-   <source src="/01_JS/formsJS/assets/chocolatier.mp4" type="video/mp4">
-   </video>
-  
-
-  <!-- JS (deferred so DOM is ready) -->
+  <script src="./js/modalWindow.js" defer></script>
   <script src="./js/form.js" defer></script>
 </head>
 
 <body>
-  <!-- Skip link for accessibility -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <header class="site-header">
-    <div class="container">
-      <h1>Chocolatier Bakery</h1>
-    </div>
-  </header>
+  <video class="background-video" autoplay muted loop playsinline aria-hidden="true">
+    <source src="./assets/chocolatier.mp4" type="video/mp4" />
+  </video>
 
-  <main id="main-content" class="container">
-   <video autoplay muted playsinline id="bg-video1">
-   <source src="/01_JS/formsJS/assets/ChocolatierCTA.mp4" type="video/mp4">
-   </video>
-    <section class="section stack">
-      <h2>Chocolatier Bakery ― Elegantly delectable</h2>
-      <p>Experience the finest chocolates and pastries in a cozy atmosphere.</p>
+  <div class="page-shell" id="pageShell">
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Chocolatier Bakery home">
+        <span class="brand-mark" aria-hidden="true">CB</span>
+        <span>Chocolatier Bakery</span>
+      </a>
 
-      <button id="actionButton" type="button">Order now</button>
-      <p id="output" aria-live="polite"></p>
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        type="button"
+        aria-label="Open menu"
+        aria-controls="siteNavigation"
+        aria-expanded="false"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-nav" id="siteNavigation" aria-label="Primary navigation">
+        <a href="#menu">Menu</a>
+        <a href="#story">Our Story</a>
+        <a href="#order">Order</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <section class="hero" aria-labelledby="heroTitle">
+        <div class="hero-copy">
+          <p class="eyebrow">Small-batch pastries and chocolate</p>
+          <h1 id="heroTitle">Elegant bakery boxes, made to order.</h1>
+          <p>
+            Choose from polished cakes, chocolate tarts, croissants, and seasonal
+            pastry trays prepared for pickup.
+          </p>
+
+          <button class="button-primary" id="actionButton" type="button">
+            Order now
+          </button>
+          <p id="output" class="status-message" aria-live="polite"></p>
+        </div>
+
+        <div class="hero-media" aria-label="Bakery feature video">
+          <video autoplay muted loop playsinline>
+            <source src="./assets/ChocolatierCTA.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </section>
+
+      <section class="menu-preview" id="menu" aria-labelledby="menuTitle">
+        <div class="section-heading">
+          <p class="eyebrow">Signature menu</p>
+          <h2 id="menuTitle">A few house favorites</h2>
+        </div>
+
+        <div class="menu-grid">
+          <article class="menu-card">
+            <h3>Chocolate Ganache Tart</h3>
+            <p>Dark chocolate custard, cocoa crust, sea salt finish.</p>
+            <span>$12</span>
+          </article>
+
+          <article class="menu-card">
+            <h3>Vanilla Bean Croissant</h3>
+            <p>Layered butter pastry with vanilla cream and pearl sugar.</p>
+            <span>$8</span>
+          </article>
+
+          <article class="menu-card">
+            <h3>Celebration Cake Box</h3>
+            <p>Four mini cakes with rotating seasonal flavors.</p>
+            <span>$34</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="story-section" id="story" aria-labelledby="storyTitle">
+        <div class="section-heading">
+          <p class="eyebrow">Our story</p>
+          <h2 id="storyTitle">Quietly luxurious, never fussy.</h2>
+        </div>
+        <p>
+          Chocolatier Bakery is a fictional pastry studio focused on refined
+          chocolate desserts, polished presentation, and simple pickup ordering.
+        </p>
+      </section>
+
+      <section class="order-cta" id="order" aria-labelledby="orderTitle">
+        <p class="eyebrow">Ready for pickup</p>
+        <h2 id="orderTitle">Build your bakery order.</h2>
+        <p>
+          Open the order form, choose your pastry, and send your pickup details.
+        </p>
+        <button class="button-secondary" type="button" data-open-order>
+          Start order
+        </button>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="contact">
+      <p>&copy; 2026 Chocolatier Bakery</p>
+      <p>hello@chocolatierbakery.example</p>
+    </footer>
+  </div>
+
+  <div class="modal-backdrop" id="orderModal" hidden>
+    <section
+      class="order-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="orderModalTitle"
+      aria-describedby="orderModalDescription"
+    >
+      <button
+        class="modal-close"
+        id="closeOrderModal"
+        type="button"
+        aria-label="Close order form"
+      >
+        &times;
+      </button>
+
+      <div class="section-heading">
+        <p class="eyebrow">Order request</p>
+        <h2 id="orderModalTitle">Tell us what to prepare.</h2>
+        <p id="orderModalDescription">
+          Share your contact details, menu choice, and preferred pickup time.
+        </p>
+      </div>
+
+      <form class="order-form" id="orderForm">
+        <div class="form-field">
+          <label for="customerName">Name</label>
+          <input id="customerName" name="customerName" type="text" required />
+        </div>
+
+        <div class="form-field">
+          <label for="customerEmail">Email</label>
+          <input id="customerEmail" name="customerEmail" type="email" required />
+        </div>
+
+        <div class="form-field">
+          <label for="menuItem">Menu item</label>
+          <select id="menuItem" name="menuItem" required>
+            <option value="">Choose an item</option>
+            <option value="Chocolate Ganache Tart">Chocolate Ganache Tart</option>
+            <option value="Vanilla Bean Croissant">Vanilla Bean Croissant</option>
+            <option value="Celebration Cake Box">Celebration Cake Box</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="quantity">Quantity</label>
+          <input id="quantity" name="quantity" type="number" min="1" value="1" required />
+        </div>
+
+        <div class="form-field">
+          <label for="pickupDate">Pickup date</label>
+          <input id="pickupDate" name="pickupDate" type="date" required />
+        </div>
+
+        <div class="form-field">
+          <label for="orderNotes">Notes</label>
+          <textarea
+            id="orderNotes"
+            name="orderNotes"
+            rows="4"
+            placeholder="Allergies, gift notes, or timing details"
+          ></textarea>
+        </div>
+
+        <button class="button-primary" type="submit">Submit order request</button>
+      </form>
     </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <small>&copy; 2026</small>
-    </div>
-  </footer>
+  </div>
 </body>
 </html>
