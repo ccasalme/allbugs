@@ -9,6 +9,11 @@ let lastFocusedElement = null;
 
 function openOrderModal() {
   lastFocusedElement = document.activeElement;
+
+  if (typeof prepareOrderFormFromCart === 'function') {
+    prepareOrderFormFromCart();
+  }
+
   orderModal.hidden = false;
   document.body.classList.add('modal-open');
   firstOrderField.focus();
