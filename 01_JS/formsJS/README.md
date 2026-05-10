@@ -8,6 +8,8 @@ It is designed as a polished starter template for a restaurant, cafe, bakery, or
 
 This template is best used by developers looking for front-end restaurant website design ideas, layout inspiration, or a starting point for building a restaurant-themed UI.
 
+Checkout the Figma Template that I created here: [Chocolatier Bakery Figma Template](https://www.figma.com/community/file/1635437306999238727)
+
 ## What This Template Does
 
 - Shows a restaurant-style landing page
