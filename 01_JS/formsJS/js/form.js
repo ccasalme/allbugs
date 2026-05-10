@@ -18,6 +18,12 @@ const cartItems = document.getElementById('cartItems');
 const cartTotal = document.getElementById('cartTotal');
 const cartMessage = document.getElementById('cartMessage');
 const checkoutCartButton = document.getElementById('checkoutCartButton');
+const cartPanel = document.getElementById('cartPanel');
+const cartToast = document.getElementById('cartToast');
+const cartToastTitle = document.getElementById('cartToastTitle');
+const cartToastMessage = document.getElementById('cartToastMessage');
+const cartToastLink = document.getElementById('cartToastLink');
+const cartToastClose = document.getElementById('cartToastClose');
 
 const phoneNumber = '1-888-777-6666';
 const maxOnlineItems = 12;
@@ -26,6 +32,9 @@ const namePattern = /^[A-Za-z ]+$/;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 let pendingOrderData = null;
 let cart = [];
+let cartToastTimer = null;
+let cartToastTouchStartX = 0;
+let cartToastTouchStartY = 0;
 
 function getDateValue(daysFromToday = 0) {
   const date = new Date();
@@ -90,7 +99,45 @@ function getCartTotal() {
 }
 
 function showCartLimitMessage() {
-  cartMessage.textContent = `For orders of ${maxOnlineItems} or more items, please call us at ${phoneNumber} so we can make sure we have enough in stock for what you are looking for.`;
+  const message = `For orders of ${maxOnlineItems} or more items, please call us at ${phoneNumber} so we can make sure we have enough in stock for what you are looking for.`;
+
+  cartMessage.textContent = message;
+  showCartToast({
+    title: 'Please call us first',
+    message,
+    type: 'warning',
+  });
+}
+
+function focusCartPanel() {
+  cartPanel.scrollIntoView({
+    behavior: 'smooth',
+    block: 'center',
+  });
+  cartPanel.focus({
+    preventScroll: true,
+  });
+}
+
+function hideCartToast() {
+  clearTimeout(cartToastTimer);
+  cartToast.hidden = true;
+}
+
+function showCartToast({
+  title = 'Added to your cart!',
+  message = '',
+  type = 'success',
+} = {}) {
+  clearTimeout(cartToastTimer);
+  cartToastTitle.textContent = title;
+  cartToastMessage.textContent = message;
+  cartToast.classList.toggle('is-warning', type === 'warning');
+  cartToast.hidden = false;
+
+  cartToastTimer = setTimeout(() => {
+    hideCartToast();
+  }, 5000);
 }
 
 function renderCart() {
@@ -141,6 +188,7 @@ function addToCart(name, quantity) {
 
   cartMessage.textContent = `${quantity} ${name}${quantity === 1 ? ' was' : 's were'} added to your cart.`;
   renderCart();
+  showCartToast();
 }
 
 function addCartControls() {
@@ -185,6 +233,11 @@ function setQuantityLimitValidity(shouldReport = false) {
   quantityInputs[0].setCustomValidity(message);
 
   if (shouldReport) {
+    showCartToast({
+      title: 'Please call us first',
+      message,
+      type: 'warning',
+    });
     quantityInputs[0].reportValidity();
   }
 
@@ -383,18 +436,32 @@ function openReviewModal(orderData) {
   pendingOrderData = orderData;
   renderOrderSummary(reviewOrderSummary, orderData, true);
   reviewModal.hidden = false;
-  placeOrderButton.focus();
+
+  if (typeof activateModalFocus === 'function') {
+    activateModalFocus(reviewModal, placeOrderButton);
+  } else {
+    placeOrderButton.focus();
+  }
 }
 
 function closeReviewModal() {
   reviewModal.hidden = true;
+
+  if (typeof activateModalFocus === 'function' && !orderModal.hidden) {
+    activateModalFocus(orderModal, customerNameInput);
+  }
 }
 
 function openPlacedModal(orderData) {
   renderOrderSummary(placedOrderSummary, orderData);
   document.body.classList.add('modal-open');
   placedModal.hidden = false;
-  doneOrderButton.focus();
+
+  if (typeof activateModalFocus === 'function') {
+    activateModalFocus(placedModal, doneOrderButton);
+  } else {
+    doneOrderButton.focus();
+  }
 }
 
 function closePlacedModal() {
@@ -402,6 +469,14 @@ function closePlacedModal() {
   document.body.classList.remove('modal-open');
   output.textContent = `Your order is placed, ${pendingOrderData.customerName}. Thank you for ordering!`;
   pendingOrderData = null;
+
+  if (typeof deactivateModalFocus === 'function') {
+    deactivateModalFocus();
+  }
+
+  if (typeof restoreLastFocus === 'function') {
+    restoreLastFocus();
+  }
 }
 
 setPickupDateLimits();
@@ -420,12 +495,7 @@ customerNameInput.addEventListener('input', () => {
 
 addItemButton.addEventListener('click', addOrderRow);
 
-document.querySelector('.menu-preview').addEventListener('click', (event) => {
-  if (!event.target.classList.contains('add-cart-button')) {
-    return;
-  }
-
-  const card = event.target.closest('.menu-card');
+function addCardItemToCart(card) {
   const itemName = card.querySelector('h3').textContent;
   const quantityInput = card.querySelector('.menu-cart-quantity');
   const quantity = Number(quantityInput.value);
@@ -436,6 +506,24 @@ document.querySelector('.menu-preview').addEventListener('click', (event) => {
   }
 
   addToCart(itemName, quantity);
+}
+
+document.querySelector('.menu-preview').addEventListener('click', (event) => {
+  if (!event.target.classList.contains('add-cart-button')) {
+    return;
+  }
+
+  const card = event.target.closest('.menu-card');
+  addCardItemToCart(card);
+});
+
+document.querySelector('.menu-preview').addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter' || !event.target.classList.contains('menu-cart-quantity')) {
+    return;
+  }
+
+  event.preventDefault();
+  addCardItemToCart(event.target.closest('.menu-card'));
 });
 
 cartItems.addEventListener('click', (event) => {
@@ -457,6 +545,31 @@ checkoutCartButton.addEventListener('click', () => {
 
   if (typeof openOrderModal === 'function') {
     openOrderModal();
+  }
+});
+
+cartToastLink.addEventListener('click', (event) => {
+  event.preventDefault();
+  hideCartToast();
+  focusCartPanel();
+});
+
+cartToastClose.addEventListener('click', hideCartToast);
+
+cartToast.addEventListener('touchstart', (event) => {
+  const touch = event.changedTouches[0];
+  cartToastTouchStartX = touch.clientX;
+  cartToastTouchStartY = touch.clientY;
+});
+
+cartToast.addEventListener('touchend', (event) => {
+  const touch = event.changedTouches[0];
+  const deltaX = touch.clientX - cartToastTouchStartX;
+  const deltaY = touch.clientY - cartToastTouchStartY;
+  const swipedFarEnough = Math.abs(deltaX) > 60 || deltaY < -45;
+
+  if (swipedFarEnough) {
+    hideCartToast();
   }
 });
 
@@ -502,7 +615,7 @@ placeOrderButton.addEventListener('click', () => {
   }
 
   closeReviewModal();
-  closeOrderModal();
+  closeOrderModal(false);
   openPlacedModal(pendingOrderData);
   orderForm.reset();
   cart = [];
