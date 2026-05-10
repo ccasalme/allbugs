@@ -4,11 +4,45 @@ const openOrderButtons = document.querySelectorAll('[data-open-order]');
 const menuToggle = document.getElementById('menuToggle');
 const siteNavigation = document.getElementById('siteNavigation');
 const firstOrderField = document.getElementById('customerName');
+const focusableSelector = [
+  'a[href]',
+  'button:not([disabled])',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(',');
 
 let lastFocusedElement = null;
+let activeModal = null;
+
+function getFocusableElements(container) {
+  return Array.from(container.querySelectorAll(focusableSelector)).filter((element) => {
+    return element.offsetParent !== null;
+  });
+}
+
+function activateModalFocus(modal, firstFocusTarget) {
+  activeModal = modal;
+  const focusTarget = firstFocusTarget || getFocusableElements(modal)[0] || modal;
+
+  focusTarget.focus();
+}
+
+function deactivateModalFocus() {
+  activeModal = null;
+}
+
+function restoreLastFocus() {
+  if (lastFocusedElement) {
+    lastFocusedElement.focus();
+  }
+}
 
 function openOrderModal() {
-  lastFocusedElement = document.activeElement;
+  if (!activeModal) {
+    lastFocusedElement = document.activeElement;
+  }
 
   if (typeof prepareOrderFormFromCart === 'function') {
     prepareOrderFormFromCart();
@@ -16,15 +50,16 @@ function openOrderModal() {
 
   orderModal.hidden = false;
   document.body.classList.add('modal-open');
-  firstOrderField.focus();
+  activateModalFocus(orderModal, firstOrderField);
 }
 
-function closeOrderModal() {
+function closeOrderModal(shouldRestoreFocus = true) {
   orderModal.hidden = true;
+  deactivateModalFocus();
   document.body.classList.remove('modal-open');
 
-  if (lastFocusedElement) {
-    lastFocusedElement.focus();
+  if (shouldRestoreFocus) {
+    restoreLastFocus();
   }
 }
 
@@ -57,6 +92,28 @@ document.addEventListener('keydown', (event) => {
   const reviewModal = document.getElementById('reviewModal');
   const placedModal = document.getElementById('placedModal');
   const confirmationIsOpen = !reviewModal.hidden || !placedModal.hidden;
+
+  if (event.key === 'Tab' && activeModal) {
+    const focusableElements = getFocusableElements(activeModal);
+    const firstFocusable = focusableElements[0];
+    const lastFocusable = focusableElements[focusableElements.length - 1];
+
+    if (!firstFocusable || !lastFocusable) {
+      event.preventDefault();
+      return;
+    }
+
+    if (event.shiftKey && document.activeElement === firstFocusable) {
+      event.preventDefault();
+      lastFocusable.focus();
+      return;
+    }
+
+    if (!event.shiftKey && document.activeElement === lastFocusable) {
+      event.preventDefault();
+      firstFocusable.focus();
+    }
+  }
 
   if (event.key === 'Escape' && !orderModal.hidden && !confirmationIsOpen) {
     closeOrderModal();

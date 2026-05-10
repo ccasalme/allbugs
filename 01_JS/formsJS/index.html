@@ -256,7 +256,7 @@
           </article>
         </div>
 
-        <aside class="cart-panel" id="cartPanel" aria-labelledby="cartTitle">
+        <aside class="cart-panel" id="cartPanel" aria-labelledby="cartTitle" tabindex="-1">
           <div>
             <p class="eyebrow">Cart</p>
             <h3 id="cartTitle">Your bakery cart</h3>
@@ -265,7 +265,7 @@
             <p>Your cart is empty.</p>
           </div>
           <p class="cart-total" id="cartTotal">0 items selected.</p>
-          <p class="cart-message" id="cartMessage" aria-live="polite"></p>
+          <p class="cart-message" id="cartMessage" role="status" aria-live="polite"></p>
           <button class="button-primary" id="checkoutCartButton" type="button" disabled>
             Checkout
           </button>
@@ -301,6 +301,19 @@
     </footer>
   </div>
 
+  <a class="back-to-top" href="#main-content">Back to top</a>
+
+  <div class="cart-toast" id="cartToast" role="status" aria-live="polite" hidden>
+    <div>
+      <strong id="cartToastTitle">Added to your cart!</strong>
+      <span id="cartToastMessage"></span>
+      <a href="#cartPanel" id="cartToastLink">See cart here</a>
+    </div>
+    <button class="cart-toast-close" id="cartToastClose" type="button" aria-label="Dismiss cart notification">
+      &times;
+    </button>
+  </div>
+
   <div class="modal-backdrop" id="orderModal" hidden>
     <section
       class="order-modal"
@@ -308,6 +321,7 @@
       aria-modal="true"
       aria-labelledby="orderModalTitle"
       aria-describedby="orderModalDescription"
+      tabindex="-1"
     >
       <button
         class="modal-close"
@@ -436,6 +450,7 @@
       aria-modal="true"
       aria-labelledby="reviewModalTitle"
       aria-describedby="reviewModalDescription"
+      tabindex="-1"
     >
       <div class="section-heading">
         <p class="eyebrow">Review order</p>
@@ -465,6 +480,7 @@
       aria-modal="true"
       aria-labelledby="placedModalTitle"
       aria-describedby="placedModalDescription"
+      tabindex="-1"
     >
       <div class="section-heading">
         <p class="eyebrow">Order placed</p>
