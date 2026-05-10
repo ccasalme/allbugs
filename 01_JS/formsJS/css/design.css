@@ -774,6 +774,28 @@ p {
   background: #fffdf8;
   color: var(--ink);
   padding: 0.8rem 0.9rem;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.form-field input:hover,
+.form-field select:hover,
+.form-field textarea:hover,
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  border-color: rgba(155, 63, 89, 0.38);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(155, 63, 89, 0.08);
+}
+
+.form-field select {
+  background-image: none;
+  color-scheme: light;
+}
+
+.form-field select option {
+  background: #fffdf8;
+  color: var(--ink);
 }
 
 .order-items {
@@ -786,6 +808,30 @@ p {
   grid-template-columns: minmax(0, 1fr) 6rem auto;
   gap: 0.6rem;
   align-items: center;
+  padding: 0;
+}
+
+.menu-item-select {
+  min-height: 3rem;
+  border-color: rgba(155, 63, 89, 0.22);
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: var(--ink);
+  font-weight: 700;
+  box-shadow: 0 8px 18px rgba(42, 23, 33, 0.06);
+}
+
+.menu-item-select:hover,
+.menu-item-select:focus {
+  border-color: rgba(155, 63, 89, 0.46);
+  background-color: #ffffff;
+}
+
+.item-quantity {
+  min-height: 3rem;
+  border-radius: 999px;
+  text-align: center;
+  font-weight: 800;
 }
 
 .add-item-button,
