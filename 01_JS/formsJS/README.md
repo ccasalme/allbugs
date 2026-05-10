@@ -18,14 +18,40 @@ This template is best used by developers looking for front-end restaurant websit
 - Displays a 10-item menu
 - Lets customers add menu items to a cart
 - Tracks item quantities in the cart
+- Shows a top notification when an item is added to the cart
+- Lets customers jump directly to the cart from the notification
+- Lets customers dismiss the cart notification by button, timeout, or swipe
+- Blocks cart additions that would reach 12 or more items
 - Opens an order form modal
 - Prefills the order form from the cart
+- Keeps the cart and "Order now" buttons in sync
+- Supports multiple order items with individual quantities
 - Validates customer details
 - Prevents past pickup dates
 - Limits pickup dates to one week ahead
 - Requires customers to call for orders of 12 or more items
 - Shows an order review step before placing the order
 - Shows a final "Your order is placed!" confirmation
+- Includes a floating "Back to top" button
+- Includes hover and focus styling for navigation, menu cards, buttons, cart rows, and controls
+- Includes keyboard support for adding items to the cart with Enter
+
+## Accessibility And Interaction Features
+
+This template includes several accessibility-minded interaction details:
+
+- skip link for keyboard users
+- semantic page landmarks
+- accessible form labels
+- responsive hamburger menu with `aria-expanded`
+- modal dialogs with focus trapping
+- focus return after modal actions
+- keyboard-friendly cart and order controls
+- status notifications using `aria-live`
+- visible focus states
+- hover and focus styles that mirror each other where possible
+
+This is still a template, so accessibility should be tested again after customizing colors, images, content, and behavior.
 
 ## Important Scope Note
 
@@ -100,10 +126,12 @@ To change global reset/base styles:
 To change cart, validation, or order behavior:
 
 - edit `js/form.js`
+- this includes cart totals, order limits, toast notifications, order review, and confirmation behavior
 
 To change modal or hamburger menu behavior:
 
 - edit `js/modalWindow.js`
+- this includes modal open/close behavior, mobile navigation, and focus trapping
 
 ## How To Fork And Customize
 
