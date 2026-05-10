@@ -13,6 +13,11 @@ const placedOrderSummary = document.getElementById('placedOrderSummary');
 const editOrderButton = document.getElementById('editOrderButton');
 const placeOrderButton = document.getElementById('placeOrderButton');
 const doneOrderButton = document.getElementById('doneOrderButton');
+const menuCards = document.querySelectorAll('.menu-preview .menu-card');
+const cartItems = document.getElementById('cartItems');
+const cartTotal = document.getElementById('cartTotal');
+const cartMessage = document.getElementById('cartMessage');
+const checkoutCartButton = document.getElementById('checkoutCartButton');
 
 const phoneNumber = '1-888-777-6666';
 const maxOnlineItems = 12;
@@ -20,6 +25,7 @@ const maxNameLength = 40;
 const namePattern = /^[A-Za-z ]+$/;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 let pendingOrderData = null;
+let cart = [];
 
 function getDateValue(daysFromToday = 0) {
   const date = new Date();
@@ -79,6 +85,87 @@ function updateOrderLimitNote() {
   orderLimitNote.textContent = `${total} item${total === 1 ? '' : 's'} selected. Please call for orders of ${maxOnlineItems} or more items.`;
 }
 
+function getCartTotal() {
+  return cart.reduce((total, item) => total + item.quantity, 0);
+}
+
+function showCartLimitMessage() {
+  cartMessage.textContent = `For orders of ${maxOnlineItems} or more items, please call us at ${phoneNumber} so we can make sure we have enough in stock for what you are looking for.`;
+}
+
+function renderCart() {
+  const total = getCartTotal();
+
+  cartItems.innerHTML = '';
+  cartTotal.textContent = `${total} item${total === 1 ? '' : 's'} selected.`;
+  checkoutCartButton.disabled = cart.length === 0;
+
+  if (cart.length === 0) {
+    cartItems.innerHTML = '<p>Your cart is empty.</p>';
+    return;
+  }
+
+  cart.forEach((item) => {
+    const cartLine = document.createElement('div');
+    cartLine.className = 'cart-line';
+    cartLine.innerHTML = `
+      <strong>${escapeHtml(item.name)}</strong>
+      <span>${item.quantity} item${item.quantity === 1 ? '' : 's'}</span>
+      <button class="cart-remove-button" type="button" data-cart-item="${escapeHtml(item.name)}">
+        Remove
+      </button>
+    `;
+
+    cartItems.append(cartLine);
+  });
+}
+
+function addToCart(name, quantity) {
+  const nextTotal = getCartTotal() + quantity;
+
+  if (nextTotal >= maxOnlineItems) {
+    showCartLimitMessage();
+    return;
+  }
+
+  const existingItem = cart.find((item) => item.name === name);
+
+  if (existingItem) {
+    existingItem.quantity += quantity;
+  } else {
+    cart.push({
+      name,
+      quantity,
+    });
+  }
+
+  cartMessage.textContent = `${quantity} ${name}${quantity === 1 ? ' was' : 's were'} added to your cart.`;
+  renderCart();
+}
+
+function addCartControls() {
+  menuCards.forEach((card) => {
+    const itemName = card.querySelector('h3').textContent;
+    const controls = document.createElement('div');
+    controls.className = 'menu-cart-controls';
+    controls.innerHTML = `
+      <input
+        class="menu-cart-quantity"
+        type="number"
+        min="1"
+        max="11"
+        value="1"
+        aria-label="Quantity for ${escapeHtml(itemName)}"
+      />
+      <button class="add-cart-button" type="button">
+        Add to cart
+      </button>
+    `;
+
+    card.append(controls);
+  });
+}
+
 function setQuantityLimitValidity(shouldReport = false) {
   const quantityInputs = getQuantityInputs();
   const total = getOrderTotal();
@@ -123,6 +210,36 @@ function createOrderRow() {
   quantityInput.setCustomValidity('');
 
   return newRow;
+}
+
+function setOrderRowsFromCart() {
+  const rows = getOrderRows();
+  const firstRow = rows[0];
+
+  rows.slice(1).forEach((row) => row.remove());
+
+  cart.forEach((item, index) => {
+    const row = index === 0 ? firstRow : createOrderRow();
+
+    row.querySelector('.menu-item-select').value = item.name;
+    row.querySelector('.item-quantity').value = String(item.quantity);
+
+    if (index > 0) {
+      orderItems.append(row);
+    }
+  });
+
+  updateRemoveButtons();
+  updateOrderLimitNote();
+  setQuantityLimitValidity();
+}
+
+function prepareOrderFormFromCart() {
+  if (cart.length === 0) {
+    return;
+  }
+
+  setOrderRowsFromCart();
 }
 
 function addOrderRow() {
@@ -288,6 +405,8 @@ function closePlacedModal() {
 }
 
 setPickupDateLimits();
+addCartControls();
+renderCart();
 updateRemoveButtons();
 updateOrderLimitNote();
 
@@ -300,6 +419,46 @@ customerNameInput.addEventListener('input', () => {
 });
 
 addItemButton.addEventListener('click', addOrderRow);
+
+document.querySelector('.menu-preview').addEventListener('click', (event) => {
+  if (!event.target.classList.contains('add-cart-button')) {
+    return;
+  }
+
+  const card = event.target.closest('.menu-card');
+  const itemName = card.querySelector('h3').textContent;
+  const quantityInput = card.querySelector('.menu-cart-quantity');
+  const quantity = Number(quantityInput.value);
+
+  if (quantity < 1 || Number.isNaN(quantity)) {
+    quantityInput.reportValidity();
+    return;
+  }
+
+  addToCart(itemName, quantity);
+});
+
+cartItems.addEventListener('click', (event) => {
+  if (!event.target.classList.contains('cart-remove-button')) {
+    return;
+  }
+
+  cart = cart.filter((item) => item.name !== event.target.dataset.cartItem);
+  cartMessage.textContent = '';
+  renderCart();
+});
+
+checkoutCartButton.addEventListener('click', () => {
+  if (cart.length === 0) {
+    return;
+  }
+
+  prepareOrderFormFromCart();
+
+  if (typeof openOrderModal === 'function') {
+    openOrderModal();
+  }
+});
 
 orderItems.addEventListener('click', (event) => {
   if (!event.target.classList.contains('remove-item-button')) {
@@ -346,6 +505,9 @@ placeOrderButton.addEventListener('click', () => {
   closeOrderModal();
   openPlacedModal(pendingOrderData);
   orderForm.reset();
+  cart = [];
+  cartMessage.textContent = '';
+  renderCart();
   getOrderRows().slice(1).forEach((row) => row.remove());
   setPickupDateLimits();
   updateRemoveButtons();
