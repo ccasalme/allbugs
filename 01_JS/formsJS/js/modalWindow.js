@@ -49,7 +49,11 @@ orderModal.addEventListener('click', (event) => {
 });
 
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && !orderModal.hidden) {
+  const reviewModal = document.getElementById('reviewModal');
+  const placedModal = document.getElementById('placedModal');
+  const confirmationIsOpen = !reviewModal.hidden || !placedModal.hidden;
+
+  if (event.key === 'Escape' && !orderModal.hidden && !confirmationIsOpen) {
     closeOrderModal();
   }
 });

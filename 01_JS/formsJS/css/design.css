@@ -378,6 +378,50 @@ p {
   box-shadow: var(--shadow);
 }
 
+.confirmation-modal {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.order-summary {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.85rem;
+  background: #fffdf8;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--muted);
+}
+
+.summary-row strong {
+  color: var(--cocoa);
+}
+
+.summary-items {
+  display: grid;
+  gap: 0.35rem;
+  padding-left: 1rem;
+  color: var(--muted);
+}
+
+.summary-warning {
+  color: var(--rose);
+  font-weight: 800;
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
 .modal-close {
   position: absolute;
   top: 1rem;

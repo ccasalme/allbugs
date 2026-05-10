@@ -375,7 +375,7 @@
                 name="quantity[]"
                 type="number"
                 min="1"
-                max="12"
+                max="11"
                 value="1"
                 aria-label="Item quantity"
                 required
@@ -390,7 +390,7 @@
             Add another item
           </button>
           <p class="order-limit-note" id="orderLimitNote">
-            You can order up to 12 items total online.
+            Please call for orders of 12 or more items.
           </p>
         </fieldset>
 
@@ -411,6 +411,61 @@
 
         <button class="button-primary" type="submit">Submit order request</button>
       </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="reviewModal" hidden>
+    <section
+      class="order-modal confirmation-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="reviewModalTitle"
+      aria-describedby="reviewModalDescription"
+    >
+      <div class="section-heading">
+        <p class="eyebrow">Review order</p>
+        <h2 id="reviewModalTitle">Confirm your bakery order.</h2>
+        <p id="reviewModalDescription">
+          Please review the details below. Orders cannot be cancelled after they are placed.
+        </p>
+      </div>
+
+      <div class="order-summary" id="reviewOrderSummary"></div>
+
+      <div class="modal-actions">
+        <button class="button-secondary" id="editOrderButton" type="button">
+          Edit order
+        </button>
+        <button class="button-primary" id="placeOrderButton" type="button">
+          Place order
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="placedModal" hidden>
+    <section
+      class="order-modal confirmation-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="placedModalTitle"
+      aria-describedby="placedModalDescription"
+    >
+      <div class="section-heading">
+        <p class="eyebrow">Order placed</p>
+        <h2 id="placedModalTitle">Your order is placed!</h2>
+        <p id="placedModalDescription">
+          Thank you for ordering. We received your request and will contact you if we need to confirm any details.
+        </p>
+      </div>
+
+      <div class="order-summary" id="placedOrderSummary"></div>
+
+      <div class="modal-actions">
+        <button class="button-primary" id="doneOrderButton" type="button">
+          Done
+        </button>
+      </div>
     </section>
   </div>
 </body>

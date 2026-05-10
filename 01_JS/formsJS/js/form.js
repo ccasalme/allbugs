@@ -6,12 +6,20 @@ const pickupDateInput = document.getElementById('pickupDate');
 const orderItems = document.getElementById('orderItems');
 const addItemButton = document.getElementById('addItemButton');
 const orderLimitNote = document.getElementById('orderLimitNote');
+const reviewModal = document.getElementById('reviewModal');
+const placedModal = document.getElementById('placedModal');
+const reviewOrderSummary = document.getElementById('reviewOrderSummary');
+const placedOrderSummary = document.getElementById('placedOrderSummary');
+const editOrderButton = document.getElementById('editOrderButton');
+const placeOrderButton = document.getElementById('placeOrderButton');
+const doneOrderButton = document.getElementById('doneOrderButton');
 
 const phoneNumber = '1-888-777-6666';
 const maxOnlineItems = 12;
 const maxNameLength = 40;
 const namePattern = /^[A-Za-z ]+$/;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+let pendingOrderData = null;
 
 function getDateValue(daysFromToday = 0) {
   const date = new Date();
@@ -33,8 +41,21 @@ function showFieldMessage(field, message) {
   field.reportValidity();
 }
 
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
 function getOrderRows() {
   return Array.from(orderItems.querySelectorAll('.order-item'));
+}
+
+function getQuantityInputs() {
+  return Array.from(orderItems.querySelectorAll('.item-quantity'));
 }
 
 function getOrderDetails() {
@@ -55,7 +76,32 @@ function getOrderTotal() {
 
 function updateOrderLimitNote() {
   const total = getOrderTotal();
-  orderLimitNote.textContent = `${total} of ${maxOnlineItems} online items selected.`;
+  orderLimitNote.textContent = `${total} item${total === 1 ? '' : 's'} selected. Please call for orders of ${maxOnlineItems} or more items.`;
+}
+
+function setQuantityLimitValidity(shouldReport = false) {
+  const quantityInputs = getQuantityInputs();
+  const total = getOrderTotal();
+  const message =
+    total >= maxOnlineItems
+      ? `For orders of ${maxOnlineItems} or more items, please call us at ${phoneNumber} so we can make sure we have enough in stock for what you are looking for.`
+      : '';
+
+  quantityInputs.forEach((input) => {
+    input.setCustomValidity('');
+  });
+
+  if (!message) {
+    return true;
+  }
+
+  quantityInputs[0].setCustomValidity(message);
+
+  if (shouldReport) {
+    quantityInputs[0].reportValidity();
+  }
+
+  return false;
 }
 
 function updateRemoveButtons() {
@@ -83,15 +129,17 @@ function addOrderRow() {
   orderItems.append(createOrderRow());
   updateRemoveButtons();
   updateOrderLimitNote();
+  setQuantityLimitValidity();
 }
 
 function validateOrderItems() {
   const orderDetails = getOrderDetails();
   const firstQuantityInput = orderItems.querySelector('.item-quantity');
   const firstEmptyItem = getOrderRows().find((row) => !row.querySelector('.menu-item-select').value);
-  const total = getOrderTotal();
 
-  firstQuantityInput.setCustomValidity('');
+  getQuantityInputs().forEach((input) => {
+    input.setCustomValidity('');
+  });
 
   if (firstEmptyItem) {
     showFieldMessage(firstEmptyItem.querySelector('.menu-item-select'), 'Please choose an item for each order row.');
@@ -103,11 +151,7 @@ function validateOrderItems() {
     return false;
   }
 
-  if (total > maxOnlineItems) {
-    showFieldMessage(
-      firstQuantityInput,
-      `For orders over ${maxOnlineItems} items total, please call us at ${phoneNumber} so we can make sure we have enough in stock and can prepare everything beautifully for you.`
-    );
+  if (!setQuantityLimitValidity(true)) {
     return false;
   }
 
@@ -158,47 +202,89 @@ function validateOrder(formData) {
   return validateOrderItems();
 }
 
-function buildOrderSummary() {
-  return getOrderDetails()
-    .map((item) => `- ${item.quantity} x ${item.menuItem}`)
-    .join('\n');
-}
-
-function buildReviewMessage(formData) {
+function getOrderSnapshot(formData) {
   const customerName = String(formData.get('customerName')).trim();
   const customerEmail = String(formData.get('customerEmail')).trim();
   const customerPhone = String(formData.get('customerPhone')).trim();
   const pickupDate = formData.get('pickupDate');
   const orderNotes = String(formData.get('orderNotes')).trim() || 'None';
 
-  return `Please review your order before we send it:
-
-Name: ${customerName}
-Email: ${customerEmail}
-Phone: ${customerPhone}
-Pickup date: ${pickupDate}
-
-Items:
-${buildOrderSummary()}
-
-Notes: ${orderNotes}
-
-Orders cannot be cancelled after they are placed.
-
-Would you like to place this order?`;
+  return {
+    customerName,
+    customerEmail,
+    customerPhone,
+    pickupDate,
+    orderNotes,
+    orderDetails: getOrderDetails(),
+    total: getOrderTotal(),
+  };
 }
 
-function showConfirmation(formData) {
-  const customerName = String(formData.get('customerName')).trim();
-  const pickupDate = formData.get('pickupDate');
-  const total = getOrderTotal();
+function renderOrderSummary(container, orderData, includeWarning = false) {
+  const itemsMarkup = orderData.orderDetails
+    .map((item) => `<li>${item.quantity} x ${escapeHtml(item.menuItem)}</li>`)
+    .join('');
 
-  alert(`Thank you for ordering, ${customerName}!
+  container.innerHTML = `
+    <div class="summary-row">
+      <strong>Name</strong>
+      <span>${escapeHtml(orderData.customerName)}</span>
+    </div>
+    <div class="summary-row">
+      <strong>Email</strong>
+      <span>${escapeHtml(orderData.customerEmail)}</span>
+    </div>
+    <div class="summary-row">
+      <strong>Phone</strong>
+      <span>${escapeHtml(orderData.customerPhone)}</span>
+    </div>
+    <div class="summary-row">
+      <strong>Pickup date</strong>
+      <span>${escapeHtml(orderData.pickupDate)}</span>
+    </div>
+    <div>
+      <strong>Items</strong>
+      <ul class="summary-items">${itemsMarkup}</ul>
+    </div>
+    <div class="summary-row">
+      <strong>Total</strong>
+      <span>${orderData.total} item${orderData.total === 1 ? '' : 's'}</span>
+    </div>
+    <div>
+      <strong>Notes</strong>
+      <p>${escapeHtml(orderData.orderNotes)}</p>
+    </div>
+    ${
+      includeWarning
+        ? '<p class="summary-warning">Orders cannot be cancelled after they are placed.</p>'
+        : ''
+    }
+  `;
+}
 
-We received your request for ${total} item${total === 1 ? '' : 's'} for pickup on ${pickupDate}.
-We will contact you if we need to confirm any details.`);
+function openReviewModal(orderData) {
+  pendingOrderData = orderData;
+  renderOrderSummary(reviewOrderSummary, orderData, true);
+  reviewModal.hidden = false;
+  placeOrderButton.focus();
+}
 
-  output.textContent = `Thank you, ${customerName}. Your order request for ${total} item${total === 1 ? '' : 's'} on ${pickupDate} has been received.`;
+function closeReviewModal() {
+  reviewModal.hidden = true;
+}
+
+function openPlacedModal(orderData) {
+  renderOrderSummary(placedOrderSummary, orderData);
+  document.body.classList.add('modal-open');
+  placedModal.hidden = false;
+  doneOrderButton.focus();
+}
+
+function closePlacedModal() {
+  placedModal.hidden = true;
+  document.body.classList.remove('modal-open');
+  output.textContent = `Your order is placed, ${pendingOrderData.customerName}. Thank you for ordering!`;
+  pendingOrderData = null;
 }
 
 setPickupDateLimits();
@@ -223,6 +309,7 @@ orderItems.addEventListener('click', (event) => {
   event.target.closest('.order-item').remove();
   updateRemoveButtons();
   updateOrderLimitNote();
+  setQuantityLimitValidity();
 });
 
 orderItems.addEventListener('input', (event) => {
@@ -230,14 +317,8 @@ orderItems.addEventListener('input', (event) => {
     return;
   }
 
-  const total = getOrderTotal();
-  const message =
-    total > maxOnlineItems
-      ? `For orders over ${maxOnlineItems} items total, please call us at ${phoneNumber} so we can make sure we have enough in stock for what you are looking for.`
-      : '';
-
-  event.target.setCustomValidity(message);
   updateOrderLimitNote();
+  setQuantityLimitValidity(true);
 });
 
 orderForm.addEventListener('submit', (event) => {
@@ -249,20 +330,53 @@ orderForm.addEventListener('submit', (event) => {
     return;
   }
 
-  const customerConfirmed = confirm(buildReviewMessage(formData));
+  openReviewModal(getOrderSnapshot(formData));
+});
 
-  if (!customerConfirmed) {
+editOrderButton.addEventListener('click', () => {
+  closeReviewModal();
+});
+
+placeOrderButton.addEventListener('click', () => {
+  if (!pendingOrderData) {
     return;
   }
 
-  showConfirmation(formData);
+  closeReviewModal();
+  closeOrderModal();
+  openPlacedModal(pendingOrderData);
   orderForm.reset();
   getOrderRows().slice(1).forEach((row) => row.remove());
   setPickupDateLimits();
   updateRemoveButtons();
   updateOrderLimitNote();
+});
 
-  if (typeof closeOrderModal === 'function') {
-    closeOrderModal();
+doneOrderButton.addEventListener('click', closePlacedModal);
+
+reviewModal.addEventListener('click', (event) => {
+  if (event.target === reviewModal) {
+    closeReviewModal();
+  }
+});
+
+placedModal.addEventListener('click', (event) => {
+  if (event.target === placedModal) {
+    closePlacedModal();
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') {
+    return;
+  }
+
+  if (!placedModal.hidden) {
+    closePlacedModal();
+    return;
+  }
+
+  if (!reviewModal.hidden) {
+    closeReviewModal();
   }
 });
